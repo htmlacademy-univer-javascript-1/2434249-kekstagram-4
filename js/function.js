@@ -1,4 +1,4 @@
-const correctLength = (string, length) => string.length <= length;
+const checkStringLength = (string, length) => string.length <= length;
 
 const isPalindrom = (string) => {
   const stringWithoutSpaces = string.replaceAll(' ', '').toLowerCase();
@@ -20,6 +20,6 @@ const getNumbers = (string) => {
   return parseInt(numbers, 10);
 };
 
-correctLength('qwerty', 10);
+checkStringLength('qwerty', 10);
 isPalindrom('Лёша на полке клопа нашёл ');
 getNumbers('2023 год');
