@@ -1,17 +1,15 @@
-function correctLength(inputString, length) {
-  return inputString.length <= length ? true : false;
-}
+const correctLength = (string, length) => string.length <= length;
 
-function isPalindrom(inputString) {
-  const stringWithoutSpaces = inputString.replace(/ /g, '').toLowerCase();
+const isPalindrom = (string) => {
+  const stringWithoutSpaces = string.replaceAll(' ', '').toLowerCase();
   const reversedString = stringWithoutSpaces.split('').reverse().join('');
 
-  return stringWithoutSpaces === reversedString ? true : false;
+  return stringWithoutSpaces === reversedString;
 }
 
-function getNumbers(inputString) {
+const getNumbers = (string) => {
   let numbers = '';
-  const stringWithoutSpaces = inputString.replace(/ /g, '');
+  const stringWithoutSpaces = string.replaceAll(' ', '');
 
   for (let symbol = 0; symbol <= stringWithoutSpaces.length; symbol++) {
     if (Number.isInteger(+stringWithoutSpaces[symbol])) {
