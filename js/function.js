@@ -17,7 +17,7 @@ const getNumbers = (string) => {
     }
   }
 
-  return parseInt(numbers);
+  return parseInt(numbers, 10);
 };
 
 correctLength('qwerty', 10);
