@@ -1,13 +1,13 @@
-const PHOTO_ID_MIN = 1;
-const PHOTO_ID_MAX = 25;
-const PICTIRE_ADDRESS_MIN = 1;
-const PICTIRE_ADDRESS_MAX = 25;
-const LIKES_COUNT_MIN = 15;
-const LIKES_COUNT_MAX = 200;
-const AVATAR_PATH_MIN = 1;
-const AVATAR_PATH_MAX = 6;
-const PHOTO_ARRAY_LENGTH = 25;
-
+const COUNT_PHOTOS = 25;
+const DESCRIPTION = 'Lorem ipsum dolor sit amet';
+const AvatarId = {
+  MIN: 1,
+  MAX: 6
+};
+const CountLike = {
+  MIN: 15,
+  MAX: 200
+};
 const USER_NAMES = [
   'Alexsander',
   'Pavel',
@@ -56,24 +56,23 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 //Выбор случайного элемента из массива
 const getRandomArrayElement = (elements) => elements[getRandomRangeInteger(0, elements.length - 1)];
 
-const generatePhotoId = createRandomIdFromRangeGenerator(PHOTO_ID_MIN, PHOTO_ID_MAX);
-const generatePictureAdderss = createRandomIdFromRangeGenerator(PICTIRE_ADDRESS_MIN, PICTIRE_ADDRESS_MAX);
-const generateLikesCount = createRandomIdFromRangeGenerator(LIKES_COUNT_MIN, LIKES_COUNT_MAX);
-
 //Создание объекта
-const createPhotoInfo = () => ({
-  id: generatePhotoId(),
-  url: `photos/${generatePictureAdderss()}.jpg`,
-  description: 'Lorem ipsum dolor sit amet',
-  likes: generateLikesCount(),
-  comments: {
-    id: getRandomInteger(),
-    avatar: `img/avatar-${getRandomRangeInteger(AVATAR_PATH_MIN, AVATAR_PATH_MAX)}.svg`,
-    message: getRandomArrayElement(USER_MESSAGES),
-    name: getRandomArrayElement(USER_NAMES)
-  }
-});
+const createPhotoInfo = (countPhotos) => {
+  const generateLikesCount = createRandomIdFromRangeGenerator(CountLike.MIN, CountLike.MAX);
 
-const createArrayPhotos = (photosCount) => Array.from({length: photosCount}, createPhotoInfo);
+  return new Array(countPhotos).fill('').map((_, index) => (
+    {
+      id: ++index,
+      url: `photos/${index}.jpg`,
+      description: DESCRIPTION,
+      likes: generateLikesCount(),
+      commets: {
+        id: getRandomInteger(),
+        avatar: `img/avatar-${getRandomRangeInteger(AvatarId.MIN, AvatarId.MAX)}.svg`,
+        message: getRandomArrayElement(USER_MESSAGES),
+        name: getRandomArrayElement(USER_NAMES)
+      }
+    }));
+};
 
-createArrayPhotos(PHOTO_ARRAY_LENGTH);
+createPhotoInfo(COUNT_PHOTOS);
