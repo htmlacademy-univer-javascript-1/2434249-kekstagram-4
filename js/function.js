@@ -23,11 +23,11 @@ const getNumbers = (string) => {
 const getHoursToMinutes = (stringTime) => stringTime.split(':').map(Number).reduce((first, second) => first*60 + second);
 
 const isMeetingPossible = (startDay, endDay, startMeeting, durationMeeting) => {
-  const startDay_ = getHoursToMinutes(startDay);
-  const endDay_ = getHoursToMinutes(endDay);
-  const startMeeting_ = getHoursToMinutes(startMeeting);
+  const startDayHourInMinutes = getHoursToMinutes(startDay);
+  const endDayHourInMinutes = getHoursToMinutes(endDay);
+  const startMeetingHourInMinutes = getHoursToMinutes(startMeeting);
 
-  return (startDay_ <= startMeeting_ && startMeeting_ < endDay_) && (startMeeting_ + durationMeeting <= endDay_);
+  return (startDayHourInMinutes <= startMeetingHourInMinutes && startMeetingHourInMinutes < endDayHourInMinutes) && (startMeetingHourInMinutes + durationMeeting <= endDayHourInMinutes);
 };
 
 isMeetingPossible('08:00', '17:30', '14:00', 90);
