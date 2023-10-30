@@ -20,6 +20,21 @@ const getNumbers = (string) => {
   return parseInt(numbers, 10);
 };
 
+const getHoursToMinutes = (stringTime) => stringTime.split(':').map(Number).reduce((first, second) => first*60 + second);
+
+const isMeetingPossible = (startDay, endDay, startMeeting, durationMeeting) => {
+  const startDayHourInMinutes = getHoursToMinutes(startDay);
+  const endDayHourInMinutes = getHoursToMinutes(endDay);
+  const startMeetingHourInMinutes = getHoursToMinutes(startMeeting);
+
+  return (startDayHourInMinutes <= startMeetingHourInMinutes && startMeetingHourInMinutes < endDayHourInMinutes) && (startMeetingHourInMinutes + durationMeeting <= endDayHourInMinutes);
+};
+
+isMeetingPossible('08:00', '17:30', '14:00', 90);
+isMeetingPossible('8:0', '10:0', '8:0', 120);
+isMeetingPossible('08:00', '14:30', '14:00', 90);
+isMeetingPossible('14:00', '17:30', '08:0', 90);
+isMeetingPossible('8:00', '17:30', '08:00', 900);
 checkStringLength('qwerty', 10);
 isPalindrom('Лёша на полке клопа нашёл ');
 getNumbers('2023 год');
