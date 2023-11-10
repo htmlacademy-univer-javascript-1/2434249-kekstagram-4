@@ -6,6 +6,10 @@ const AvatarId = {
   MIN: 1,
   MAX: 6
 };
+const CountComment = {
+  MIN: 0,
+  MAX: 30
+};
 const CountLike = {
   MIN: 15,
   MAX: 200
@@ -33,10 +37,10 @@ export const createPhotoInfo = () => new Array(COUNT_PHOTOS).fill('').map((_, in
     url: `photos/${index}.jpg`,
     description: DESCRIPTION,
     likes: getRandomRangeInteger(CountLike.MIN, CountLike.MAX),
-    commets: {
+    commets: new Array(getRandomRangeInteger(CountComment.MIN, CountComment.MAX)).fill('').map(() => ({
       id: getRandomInteger(),
       avatar: `img/avatar-${getRandomRangeInteger(AvatarId.MIN, AvatarId.MAX)}.svg`,
       message: getRandomArrayElement(USER_MESSAGES),
       name: getRandomArrayElement(USER_NAMES)
-    }
+    }))
   }));
