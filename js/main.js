@@ -1,4 +1,4 @@
 import {createPhotoInfo} from './data.js';
+import {renderingImages} from './pictures.js';
 
-createPhotoInfo();
-//Почему-то в VSCode в консоль всё выводится, а в браузерной консоли выдаёт ошибку createPhotoInfo is not defined
+renderingImages(createPhotoInfo);
