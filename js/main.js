@@ -1,4 +1,8 @@
-import {createPhotoInfo} from './data.js';
-import {renderingImages} from './pictures.js';
+import {renderingImages, generatePictures} from './pictures-render.js';
+import {renderBigPicture} from './big-picture-render.js';
 
-renderingImages(createPhotoInfo);
+renderingImages();
+
+const picturesArray = document.querySelectorAll('.picture');
+
+renderBigPicture(picturesArray, generatePictures);

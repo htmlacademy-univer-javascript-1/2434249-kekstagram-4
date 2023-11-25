@@ -11,3 +11,5 @@ export const getRandomRangeInteger = (a, b) => {
 
 //Выбор случайного элемента из массива
 export const getRandomArrayElement = (elements) => elements[getRandomRangeInteger(0, elements.length - 1)];
+
+export const isEscapeKey = (evt) => evt.key === 'Escape';

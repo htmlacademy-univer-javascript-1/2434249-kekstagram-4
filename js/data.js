@@ -36,7 +36,7 @@ export const createPhotoInfo = () => new Array(COUNT_PHOTOS).fill('').map((_, in
     url: `photos/${index}.jpg`,
     description: DESCRIPTION,
     likes: getRandomRangeInteger(CountLike.MIN, CountLike.MAX),
-    commets: new Array(getRandomRangeInteger(CountComment.MIN, CountComment.MAX)).fill('').map(() => ({
+    comments: new Array(getRandomRangeInteger(CountComment.MIN, CountComment.MAX)).fill('').map(() => ({
       id: getRandomInteger(),
       avatar: `img/avatar-${getRandomRangeInteger(AvatarId.MIN, AvatarId.MAX)}.svg`,
       message: getRandomArrayElement(USER_MESSAGES),
