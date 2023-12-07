@@ -87,7 +87,6 @@ const openBigPicture = (picture) => {
 
   if (comments.length > COMMENT_STEP) {
     fullCommentArray = bigPictureInfo.socialComments.querySelectorAll('.social__comment');
-
     bigPictureInfo.socialComments.innerHTML = '';
 
     fillComments(COMMENT_STEP);
