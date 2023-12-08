@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 
+//Это тот же код, я просто случайно в одной ветке сделал сразу два задания...
 const COMMENT_STEP = 5;
 let currentCommentCount = COMMENT_STEP;
 let comments = 0;
