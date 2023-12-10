@@ -48,8 +48,6 @@ const formValidation = () => {
     const isValide = pristine.validate();
     if(!isValide){
       evt.preventDefault();
-    }else{
-      console.log('Форма валидна!');
     }
   });
 };
