@@ -72,7 +72,7 @@ const isPicture = () => {
   if (isImage) {
     openUploadForm();
   } else {
-    alert('The file is not an image!');
+    alert('Файл не является изображением!');
   }
 };
 
