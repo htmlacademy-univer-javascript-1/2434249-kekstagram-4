@@ -1,6 +1,5 @@
 import {isEscapeKey} from './util.js';
 
-//Это тот же код, я просто случайно в одной ветке сделал сразу два задания...
 const COMMENT_STEP = 5;
 let currentCommentCount = COMMENT_STEP;
 let comments = 0;
@@ -16,7 +15,8 @@ const bigPictureInfo = {
   img:  bigPicture.querySelector('.big-picture__img').querySelector('img'),
   likes: bigPicture.querySelector('.likes-count'),
   description: bigPicture.querySelector('.social__caption'),
-  socialComments: bigPicture.querySelector('.social__comments')
+  socialComments: bigPicture.querySelector('.social__comments'),
+  commentCount: bigPicture.querySelector('.comments-count')
 };
 
 const getComentTemplate = (comment) => {
@@ -35,13 +35,13 @@ const getComentTemplate = (comment) => {
 const renderBigPictureData = (picture) => {
   bigPicture.querySelector('.social__comment-count').innerHTML = '';
   const commentCountTemplate = '<span class="current-comments-count"></span> из <span class="comments-count"></span> комментариев';
+  bigPicture.querySelector('.social__comment-count').innerHTML = commentCountTemplate;
+  bigPicture.querySelector('.comments-count').textContent = picture.comments.length;
 
   bigPictureInfo.img.src = picture.url;
   bigPictureInfo.likes.textContent = picture.likes;
   bigPictureInfo.description.textContent = picture.description;
   bigPictureInfo.socialComments.innerHTML = '';
-  bigPicture.querySelector('.comments-count').textContent = picture.comments.length;
-  bigPicture.querySelector('.social__comment-count').innerHTML = commentCountTemplate;
 
   picture.comments.forEach((comment) => {
     bigPictureInfo.socialComments.insertAdjacentHTML( 'afterbegin', getComentTemplate(comment));
