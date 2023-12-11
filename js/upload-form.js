@@ -8,7 +8,7 @@ const textHashtag = uploadOverlay.querySelector('.text__hashtags');
 const textDescrition = uploadOverlay.querySelector('.text__description');
 const uploadForm = document.getElementById('upload-select-image');
 
-//Нужно ли закинуть с util...
+//Нужно ли закинуть с util....
 const isValidHashTagCount = () => {
   const hashtags = textHashtag.value.trim().split(' ');
   return hashtags.length <= 5;
@@ -70,7 +70,7 @@ const isPicture = () => {
   const isImage =  /\.(jpg|jpeg|gif|png)$/.test(url);
   if (isImage) {
     openUploadForm();
-  } 
+  }
 };
 
 const closeUploadForm = () => {
