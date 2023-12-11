@@ -70,9 +70,7 @@ const isPicture = () => {
   const isImage =  /\.(jpg|jpeg|gif|png)$/.test(url);
   if (isImage) {
     openUploadForm();
-  } else {
-    alert('Файл не является изображением!');
-  }
+  } 
 };
 
 const closeUploadForm = () => {
