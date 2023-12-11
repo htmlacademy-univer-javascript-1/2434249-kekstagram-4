@@ -26,8 +26,7 @@ const isValidHashTagType = () => {
 
 const isDuplicateHashTag = () => {
   const hashtags = textHashtag.value.trim().split(' ');
-  const duplicates = hashtags.filter((number, index, numbers) => numbers.indexOf(number) !== index);
-  return duplicates.length === 0;
+  return new Set(hashtags).size === hashtags.length;
 };
 //...вот эту часть?
 
