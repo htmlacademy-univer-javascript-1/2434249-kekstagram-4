@@ -673,7 +673,7 @@ main {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -1394,4 +1394,11 @@ main {
 
 .hidden {
   display: none;
+}
+
+.form__error {
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-transform: none;
+  font-size: 15px;
 }
