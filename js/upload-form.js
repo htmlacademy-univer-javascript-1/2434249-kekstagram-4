@@ -1,13 +1,59 @@
 import {isEscapeKey} from './util.js';
 
-const pictureScaleStep = 25;
-const pictureScaleratio = 0.01;
-const pictureScaleValues = {
+const PICTURE_SCALE_STEP = 25;
+const PICTURE_SCALE_RATIO = 0.01;
+const PictureScaleValue = {
   MAX: 100,
   MIN: 25
 };
+const EffectSetting = {
+  NONE: {
+    name: 'effect-none',
+    style: '',
+    unit: ''
+  },
+  CHROME: {
+    name: 'effect-chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  SEPIA: {
+    name: 'effect-sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  MARVIN: {
+    name: 'effect-marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  PHOBOS: {
+    name: 'effect-phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  HEAT: {
+    name: 'effect-heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  }
+};
 
-//#region Query selectors
 const body = document.querySelector('body');
 
 const uploadBtn = body.querySelector('.img-upload__input');
@@ -25,7 +71,6 @@ const sliderForEffect = uploadOverlay.querySelector('.effect-level__slider');
 const effectContainer = uploadOverlay.querySelector('.effects__list');
 const effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
 const effectlevelValue =  effectLevel.querySelector('.effect-level__value');
-//#endregion
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -35,7 +80,6 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'form__error'
 });
 
-//#region Validation functions
 const isValidHashTagCount = () => {
   const hashtags = textHashtag.value.trim().split(' ');
   return hashtags.length <= 5;
@@ -63,7 +107,9 @@ const sendingForm = (evt) => {
   }
 };
 
-function onUploadFormSubmit(evt) {sendingForm(evt);}
+function onUploadFormSubmit(evt) {
+  sendingForm(evt);
+}
 
 const formValidation = () => {
   pristine.addValidator(textHashtag, isValidHashTagCount, 'Превышено количество хэш-тегов');
@@ -72,14 +118,13 @@ const formValidation = () => {
 
   uploadForm.addEventListener('submit', onUploadFormSubmit);
 };
-//#endregion
 
 const createEffectSlider = () => {
   effectLevel.classList.add('hidden');
   noUiSlider.create(sliderForEffect, {
     range: {
       min: 0,
-      max: 100,
+      max: 0,
     },
     start: 0,
     step: 1,
@@ -141,19 +186,29 @@ const isPicture = () => {
   }
 };
 
-//#region Text field functions
-function onTextAreaFocus() {document.removeEventListener('keydown', onDocumentKeydown);}
+function onTextAreaFocus() {
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
 
-function onTextAreaBlur() {document.addEventListener('keydown', onDocumentKeydown);}
+function onTextAreaBlur() {
+  document.addEventListener('keydown', onDocumentKeydown);
+}
 
-function onTagAreaFocus() {document.removeEventListener('keydown', onDocumentKeydown);}
+function onTagAreaFocus() {
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
 
-function onTagAreaBlur() {document.addEventListener('keydown', onDocumentKeydown);}
-//#endregion
+function onTagAreaBlur() {
+  document.addEventListener('keydown', onDocumentKeydown);
+}
 
-function onUploadBtnClick() {isPicture();}
+function onUploadBtnClick() {
+  isPicture();
+}
 
-function onCloseBtnClick() {closeUploadForm();}
+function onCloseBtnClick() {
+  closeUploadForm();
+}
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
@@ -162,109 +217,73 @@ function onDocumentKeydown(evt) {
   }
 }
 
-//#region picture scale
 const updateScaleValueSmall = () => {
-  if (scaleControlValue.value.slice(0, -1) < pictureScaleValues.MAX) {
-    scaleControlValue.value = `${+scaleControlValue.value.slice(0, -1) + pictureScaleStep}%`;
-  } else {
-    scaleControlValue.value = `${pictureScaleValues.MAX}%`;
-  }
-  picture.style.scale = +scaleControlValue.value.slice(0, -1) * pictureScaleratio;
+  scaleControlValue.value = scaleControlValue.value.slice(0, -1) < PictureScaleValue.MAX
+    ? `${+scaleControlValue.value.slice(0, -1) + PICTURE_SCALE_STEP}%`
+    : `${PictureScaleValue.MAX}%`;
+
+  picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
 const updateScaleValueBig = () => {
-  if (scaleControlValue.value.slice(0, -1) > pictureScaleValues.MIN) {
-    scaleControlValue.value = `${+scaleControlValue.value.slice(0, -1) - pictureScaleStep}%`;
-  } else {
-    scaleControlValue.value = `${pictureScaleValues.MIN}%`;
-  }
-  picture.style.scale = +scaleControlValue.value.slice(0, -1) * pictureScaleratio;
+  scaleControlValue.value = scaleControlValue.value.slice(0, -1) > PictureScaleValue.MIN
+    ? `${+scaleControlValue.value.slice(0, -1) - PICTURE_SCALE_STEP}%`
+    : `${PictureScaleValue.MIN}%`;
+
+  picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
-function onPictureScaleSmallerBtnClick() {updateScaleValueSmall();}
+function onPictureScaleSmallerBtnClick() {
+  updateScaleValueSmall();
+}
 
-function onPictureScaleBiggerBtnClick() {updateScaleValueBig();}
-//#endregion
+function onPictureScaleBiggerBtnClick() {
+  updateScaleValueBig();
+}
+
+const updateSlider = (effect) => {
+  sliderForEffect.noUiSlider.on('update', () => {
+    picture.style.filter = `${effect.style}(${sliderForEffect.noUiSlider.get()}${effect.unit})`;
+    effectlevelValue.value = sliderForEffect.noUiSlider.get();
+  });
+  sliderForEffect.noUiSlider.updateOptions({
+    range: {
+      min: effect.min,
+      max: effect.max
+    },
+    start: effect.max,
+    step: effect.step
+  });
+};
 
 const effectApplication = (evt) => {
-  if (evt.target.id === 'effect-none') {
+  if (evt.target.id === EffectSetting.NONE) {
     picture.style.filter = 'none';
     effectLevel.classList.add('hidden');
   }
   else {
     effectLevel.classList.remove('hidden');
-    if (evt.target.id === 'effect-chrome') {
-      sliderForEffect.noUiSlider.on('update', () => {
-        picture.style.filter = `grayscale(${sliderForEffect.noUiSlider.get()})`;
-      });
-      sliderForEffect.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
+    if (evt.target.id === EffectSetting.CHROME.name) {
+      updateSlider(EffectSetting.CHROME);
     }
-    if (evt.target.id === 'effect-sepia') {
-      sliderForEffect.noUiSlider.on('update', () => {
-        picture.style.filter = `sepia(${sliderForEffect.noUiSlider.get()})`;
-      });
-      sliderForEffect.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1
-      });
+    if (evt.target.id === EffectSetting.SEPIA.name) {
+      updateSlider(EffectSetting.SEPIA);
     }
-    if (evt.target.id === 'effect-marvin') {
-      sliderForEffect.noUiSlider.on('update', () => {
-        picture.style.filter = `invert(${sliderForEffect.noUiSlider.get()}%)`;
-      });
-      sliderForEffect.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        start: 100,
-        step: 1
-      });
+    if (evt.target.id === EffectSetting.MARVIN.name) {
+      updateSlider(EffectSetting.MARVIN);
     }
-    if (evt.target.id === 'effect-phobos') {
-      sliderForEffect.noUiSlider.on('update', () => {
-        picture.style.filter = `blur(${sliderForEffect.noUiSlider.get()}px)`;
-      });
-      sliderForEffect.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1
-      });
+    if (evt.target.id === EffectSetting.PHOBOS.name) {
+      updateSlider(EffectSetting.PHOBOS);
     }
-    if (evt.target.id === 'effect-heat') {
-      sliderForEffect.noUiSlider.on('update', () => {
-        picture.style.filter = `brightness(${sliderForEffect.noUiSlider.get()})`;
-      });
-      sliderForEffect.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1
-      });
+    if (evt.target.id === EffectSetting.HEAT.name) {
+      updateSlider(EffectSetting.HEAT);
     }
-    sliderForEffect.noUiSlider.on('update', () => {
-      effectlevelValue.value = sliderForEffect.noUiSlider.get();
-    });
   }
 };
 
-function onEffectContainerChange(evt) {effectApplication(evt);}
+function onEffectContainerChange(evt) {
+  effectApplication(evt);
+}
 
 export const uploadNewImg = () => {
   uploadBtn.addEventListener('input', onUploadBtnClick);
