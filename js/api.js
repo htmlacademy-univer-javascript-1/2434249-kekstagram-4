@@ -4,7 +4,6 @@ import {closeUploadForm} from './upload-form.js';
 import {showSuccess, showError} from './send-status.js';
 
 const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
-let pictureArray = [];
 
 export const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
@@ -36,8 +35,7 @@ const createLoader = (errorText) => fetch(
   })
   .then((pictures) => {
     renderingImages(pictures);
-    pictureArray = document.querySelectorAll('.picture__img');
-    renderBigPicture(pictureArray, pictures);
+    renderBigPicture(pictures);
   })
   .catch(() => {
     throw new Error(errorText);
