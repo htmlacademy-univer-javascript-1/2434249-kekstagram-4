@@ -1,4 +1,59 @@
 import {isEscapeKey} from './util.js';
+import {ErrorText, sendData} from './api.js';
+
+const PICTURE_SCALE_STEP = 25;
+const PICTURE_SCALE_RATIO = 0.01;
+const PictureScaleValue = {
+  MAX: 100,
+  MIN: 25
+};
+const EffectSetting = {
+  NONE: {
+    name: 'effect-none',
+    style: '',
+    unit: ''
+  },
+  CHROME: {
+    name: 'effect-chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  SEPIA: {
+    name: 'effect-sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  MARVIN: {
+    name: 'effect-marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  PHOBOS: {
+    name: 'effect-phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  HEAT: {
+    name: 'effect-heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  }
+};
 
 const PICTURE_SCALE_STEP = 25;
 const PICTURE_SCALE_RATIO = 0.01;
@@ -71,6 +126,7 @@ const sliderForEffect = uploadOverlay.querySelector('.effect-level__slider');
 const effectContainer = uploadOverlay.querySelector('.effects__list');
 const effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
 const effectlevelValue =  effectLevel.querySelector('.effect-level__value');
+const submitBtn = uploadOverlay.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -100,10 +156,22 @@ const isDuplicateHashTag = () => {
   return new Set(hashtags).size === hashtags.length;
 };
 
+const disableSubmitBtm = () => {
+  submitBtn.disabled = true;
+};
+
+// const enableSubmitBtm = () => {
+//   submitBtn.disabled = false;
+// };
+
+
 const sendingForm = (evt) => {
+  evt.preventDefault();
   const isValide = pristine.validate();
-  if(!isValide){
-    evt.preventDefault();
+  if(isValide){
+    disableSubmitBtm();
+    const formData = new FormData(evt.target);
+    sendData(formData, ErrorText);
   }
 };
 
@@ -150,11 +218,13 @@ const openUploadForm = () => {
   picture.style.scale = 1;
   scaleControlValue.value = '100%';
   picture.style.filter = 'none';
+  submitBtn.disabled = false;
+
   formValidation();
   createEffectSlider();
 };
 
-const closeUploadForm = () => {
+export const closeUploadForm = () => {
   body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
   closeBtn.removeEventListener('click', onCloseBtnClick);

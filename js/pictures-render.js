@@ -1,13 +1,9 @@
-import {createPhotoInfo} from './data.js';
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictureList = document.querySelector('.pictures');
 
 const similarListFragment = document.createDocumentFragment();
 
-export const generatePictures = createPhotoInfo();
-
-export const renderingImages = () => {
+export const renderingImages = (generatePictures) => {
   generatePictures.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
