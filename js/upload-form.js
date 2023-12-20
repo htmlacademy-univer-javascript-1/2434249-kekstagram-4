@@ -55,6 +55,60 @@ const EffectSetting = {
   }
 };
 
+const PICTURE_SCALE_STEP = 25;
+const PICTURE_SCALE_RATIO = 0.01;
+const PictureScaleValue = {
+  MAX: 100,
+  MIN: 25
+};
+const EffectSetting = {
+  NONE: {
+    name: 'effect-none',
+    style: '',
+    unit: ''
+  },
+  CHROME: {
+    name: 'effect-chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  SEPIA: {
+    name: 'effect-sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  MARVIN: {
+    name: 'effect-marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  PHOBOS: {
+    name: 'effect-phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  HEAT: {
+    name: 'effect-heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  }
+};
+
 const body = document.querySelector('body');
 
 const uploadBtn = body.querySelector('.img-upload__input');
@@ -165,6 +219,7 @@ const openUploadForm = () => {
   scaleControlValue.value = '100%';
   picture.style.filter = 'none';
   submitBtn.disabled = false;
+
   formValidation();
   createEffectSlider();
 };
