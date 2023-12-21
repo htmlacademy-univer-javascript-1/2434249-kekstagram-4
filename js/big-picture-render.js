@@ -133,8 +133,9 @@ function onCommentLoadBtnClick() {
   loadNewComments();
 }
 
-export const renderBigPicture = (pictures, data) => {
-  pictures.forEach((picture, index) =>  {
+export const renderBigPicture = (data) => {
+  const pictureElements = document.querySelectorAll('.picture__img');
+  pictureElements.forEach((picture, index) =>  {
     picture.addEventListener('click', () => openBigPicture(data[index]));
   });
 };
