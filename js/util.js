@@ -19,7 +19,7 @@ export const debounce = (callback, timeoutDelay = 500) => {
 
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 const getPhotoRank = (photo) => photo.comments.length;
 
