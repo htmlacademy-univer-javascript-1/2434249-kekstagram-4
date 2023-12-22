@@ -41,7 +41,7 @@ export const initFilters = (data, cb) => {
 
   filtersContainer.classList.remove('img-filters--inactive');
 
-  debounce(filtersContainer.addEventListener('click', onFiltersContainerClick));
+  filtersContainer.addEventListener('click', debounce(onFiltersContainerClick));
 
   cb(pictures);
 };
