@@ -1,7 +1,5 @@
-//Генерация случайного числа
 export const getRandomInteger = () => Math.round(Math.random() * 1000);
 
-//Генерация случайного числа из диапазаона
 export const getRandomRangeInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -9,7 +7,6 @@ export const getRandomRangeInteger = (a, b) => {
   return Math.floor(result);
 };
 
-//Выбор случайного элемента из массива
 export const getRandomArrayElement = (elements) => elements[getRandomRangeInteger(0, elements.length - 1)];
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
