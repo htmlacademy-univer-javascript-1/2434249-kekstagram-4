@@ -1,18 +1,18 @@
 import {isEscapeKey} from './util.js';
 
 const body = document.querySelector('body');
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const successTemplate = body.querySelector('#success').content.querySelector('.success');
 const successBtn = successTemplate.querySelector('.success__button');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorTemplate = body.querySelector('#error').content.querySelector('.error');
 const errorBtn = errorTemplate.querySelector('.error__button');
 
 const closeMessage = (evt) => {
   if (isEscapeKey(evt) || evt.target === successBtn || evt.target === successTemplate){
-    body.removeChild(successTemplate);
+    successTemplate.remove();
     successBtn.removeEventListener('click', onCloseBtnClick);
     document.removeEventListener('keydown', onDocumentKeydown);
-  } else if (evt.target === errorTemplate || evt.target === errorTemplate || isEscapeKey(evt)) {
-    body.removeChild(errorTemplate);
+  } else if (isEscapeKey(evt) || evt.target === errorTemplate || evt.target === errorBtn) {
+    errorTemplate.removeChild();
     errorBtn.removeEventListener('click', onCloseBtnClick);
     document.removeEventListener('keydown', onDocumentKeydown);
   }
@@ -34,14 +34,14 @@ function onDocumentKeydown(evt) {
 }
 
 export const showSuccess = () => {
-  body.appendChild(successTemplate);
+  body.append(successTemplate);
   successBtn.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
 
 export const showError = () => {
-  body.appendChild(errorTemplate);
+  body.append(errorTemplate);
   errorBtn.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
