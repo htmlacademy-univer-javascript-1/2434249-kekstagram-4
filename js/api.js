@@ -36,7 +36,7 @@ const createLoader = (errorText) => fetch(
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .then((pictures) => {
-    initFilters(pictures, debounce(renderingImages, 500));
+    initFilters(pictures, debounce(renderingImages));
     renderBigPicture(pictures);
   })
   .catch(() => {
