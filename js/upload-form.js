@@ -73,6 +73,7 @@ const effectContainer = uploadOverlay.querySelector('.effects__list');
 const effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
 const effectlevelValue =  effectLevel.querySelector('.effect-level__value');
 const submitBtn = uploadOverlay.querySelector('.img-upload__submit');
+const effectItems = uploadOverlay.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -156,6 +157,11 @@ const openUploadForm = () => {
   scaleBtnSmaller.addEventListener('click', onPictureScaleBiggerBtnClick);
   effectContainer.addEventListener('change', onEffectContainerChange);
 
+  picture.src = URL.createObjectURL(uploadBtn.files[0]);
+  effectItems.forEach((item) => {
+    item.style.backgroundImage = `url("${URL.createObjectURL(uploadBtn.files[0])}")`;
+  });
+
   picture.style.scale = 1;
   scaleControlValue.value = '100%';
   picture.style.filter = 'none';
@@ -178,6 +184,11 @@ export const closeUploadForm = () => {
   scaleBtnBigger.removeEventListener('click', onPictureScaleSmallerBtnClick);
   scaleBtnSmaller.removeEventListener('click', onPictureScaleBiggerBtnClick);
   uploadForm.removeEventListener('submit', onUploadFormSubmit);
+
+  picture.src = '';
+  effectItems.forEach((item) => {
+    item.style.backgroundImage = 'none';
+  });
 
   uploadBtn.value = '';
   textHashtag.textContent = '';

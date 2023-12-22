@@ -3,7 +3,6 @@ import {renderBigPicture} from './big-picture-render.js';
 import {closeUploadForm} from './upload-form.js';
 import {showSuccess, showError} from './send-status.js';
 import {initFilters} from './filter.js';
-import {debounce} from './util.js';
 
 const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
 
@@ -36,7 +35,7 @@ const createLoader = (errorText) => fetch(
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .then((pictures) => {
-    initFilters(pictures, debounce(renderingImages));
+    initFilters(pictures, renderingImages);
     renderBigPicture(pictures);
   })
   .catch(() => {
