@@ -3,7 +3,7 @@ import {renderBigPicture} from './big-picture-render.js';
 import {closeUploadForm} from './upload-form.js';
 import {showSuccess, showError} from './send-status.js';
 import {initFilters} from './filter.js';
-import { debounce } from './util.js';
+import {debounce} from './util.js';
 
 const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
 

@@ -1,4 +1,5 @@
 import { sortByComments, sortRandom} from './util.js';
+import {debounce} from './util.js';
 
 const MAX_COUNT_RANDOM_CARD = 10;
 
@@ -39,7 +40,8 @@ export const initFilters = (data, cb) => {
   callback = cb;
 
   filtersContainer.classList.remove('img-filters--inactive');
-  filtersContainer.addEventListener('click', onFiltersContainerClick);
+
+  debounce(filtersContainer.addEventListener('click', onFiltersContainerClick), 500);
 
   cb(pictures);
 };
