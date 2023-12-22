@@ -23,7 +23,6 @@ const filterFunction = {
 };
 
 const onFiltersContainerClick = (evt) => {
-
   const id = evt.target.id;
   if (id && id !== activeFilter) {
     filtersForm.querySelector(`#${activeFilter}`).classList.remove('img-filters__button--active');
