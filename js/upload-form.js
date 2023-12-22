@@ -160,7 +160,7 @@ const openUploadForm = () => {
   picture.src = URL.createObjectURL(uploadBtn.files[0]);
   effectItems.forEach((item) => {
     item.style.backgroundImage = `url("${URL.createObjectURL(uploadBtn.files[0])}")`;
-  })
+  });
 
   picture.style.scale = 1;
   scaleControlValue.value = '100%';
@@ -188,7 +188,7 @@ export const closeUploadForm = () => {
   picture.src = '';
   effectItems.forEach((item) => {
     item.style.backgroundImage = 'none';
-  })
+  });
 
   uploadBtn.value = '';
   textHashtag.textContent = '';
