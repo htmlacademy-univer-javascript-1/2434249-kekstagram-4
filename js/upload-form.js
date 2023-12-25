@@ -64,8 +64,8 @@ const textHashtag = uploadOverlay.querySelector('.text__hashtags');
 const textDescrition = uploadOverlay.querySelector('.text__description');
 const uploadForm = document.getElementById('upload-select-image');
 
-const scaleBtnSmaller = uploadOverlay.querySelector('.scale__control--smaller');
-const scaleBtnBigger = uploadOverlay.querySelector('.scale__control--bigger');
+const scaleSmallerBtn = uploadOverlay.querySelector('.scale__control--smaller');
+const scaleBiggerBtn = uploadOverlay.querySelector('.scale__control--bigger');
 const scaleControlValue = uploadOverlay.querySelector('.scale__control--value');
 const picture = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
 const sliderForEffect = uploadOverlay.querySelector('.effect-level__slider');
@@ -103,15 +103,19 @@ const isDuplicateHashTag = () => {
   return new Set(hashtags).size === hashtags.length;
 };
 
-const disableSubmitBtm = () => {
+const disableSubmitBtn = () => {
   submitBtn.disabled = true;
+};
+
+export const enableSubmitBtn = () => {
+  submitBtn.disabled = false;
 };
 
 const sendingForm = (evt) => {
   evt.preventDefault();
   const isValide = pristine.validate();
   if(isValide){
-    disableSubmitBtm();
+    disableSubmitBtn();
     const formData = new FormData(evt.target);
     sendData(formData, ErrorText);
   }
@@ -148,13 +152,13 @@ const openUploadForm = () => {
   closeBtn.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
 
-  textDescrition.addEventListener('focus', onTextAreaFocus);
-  textDescrition.addEventListener('blur', onTextAreaBlur);
-  textHashtag.addEventListener('focus', onTagAreaFocus);
-  textHashtag.addEventListener('blur', onTagAreaBlur);
+  textDescrition.addEventListener('focus', onTextDescritionFocus);
+  textDescrition.addEventListener('blur', onTextDescritionBlur);
+  textHashtag.addEventListener('focus', onTextHashtagFocus);
+  textHashtag.addEventListener('blur', onTextHashtagBlur);
 
-  scaleBtnBigger.addEventListener('click', onPictureScaleSmallerBtnClick);
-  scaleBtnSmaller.addEventListener('click', onPictureScaleBiggerBtnClick);
+  scaleBiggerBtn.addEventListener('click', onScaleBiggerBtnClick);
+  scaleSmallerBtn.addEventListener('click', onScaleSmallerBtnClick);
   effectContainer.addEventListener('change', onEffectContainerChange);
 
   picture.src = URL.createObjectURL(uploadBtn.files[0]);
@@ -176,13 +180,13 @@ export const closeUploadForm = () => {
   closeBtn.removeEventListener('click', onCloseBtnClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 
-  textDescrition.removeEventListener('focus', onTextAreaFocus);
-  textDescrition.removeEventListener('blur', onTextAreaBlur);
-  textHashtag.removeEventListener('focus', onTagAreaFocus);
-  textHashtag.removeEventListener('blur', onTagAreaBlur);
+  textDescrition.removeEventListener('focus', onTextDescritionFocus);
+  textDescrition.removeEventListener('blur', onTextDescritionBlur);
+  textHashtag.removeEventListener('focus', onTextHashtagFocus);
+  textHashtag.removeEventListener('blur', onTextHashtagBlur);
 
-  scaleBtnBigger.removeEventListener('click', onPictureScaleSmallerBtnClick);
-  scaleBtnSmaller.removeEventListener('click', onPictureScaleBiggerBtnClick);
+  scaleBiggerBtn.removeEventListener('click', onScaleBiggerBtnClick);
+  scaleSmallerBtn.removeEventListener('click', onScaleSmallerBtnClick);
   uploadForm.removeEventListener('submit', onUploadFormSubmit);
 
   picture.src = '';
@@ -207,19 +211,19 @@ const isPicture = () => {
   }
 };
 
-function onTextAreaFocus() {
+function onTextDescritionFocus() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function onTextAreaBlur() {
+function onTextDescritionBlur() {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-function onTagAreaFocus() {
+function onTextHashtagFocus() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function onTagAreaBlur() {
+function onTextHashtagBlur() {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
@@ -238,7 +242,7 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const updateScaleValueSmall = () => {
+const updateScaleValueBig = () => {
   scaleControlValue.value = scaleControlValue.value.slice(0, -1) < PictureScaleValue.MAX
     ? `${+scaleControlValue.value.slice(0, -1) + PICTURE_SCALE_STEP}%`
     : `${PictureScaleValue.MAX}%`;
@@ -246,7 +250,7 @@ const updateScaleValueSmall = () => {
   picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
-const updateScaleValueBig = () => {
+const updateScaleValueSmall = () => {
   scaleControlValue.value = scaleControlValue.value.slice(0, -1) > PictureScaleValue.MIN
     ? `${+scaleControlValue.value.slice(0, -1) - PICTURE_SCALE_STEP}%`
     : `${PictureScaleValue.MIN}%`;
@@ -254,11 +258,11 @@ const updateScaleValueBig = () => {
   picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
-function onPictureScaleSmallerBtnClick() {
+function onScaleSmallerBtnClick() {
   updateScaleValueSmall();
 }
 
-function onPictureScaleBiggerBtnClick() {
+function onScaleBiggerBtnClick() {
   updateScaleValueBig();
 }
 

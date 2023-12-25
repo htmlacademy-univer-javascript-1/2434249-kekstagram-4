@@ -1,6 +1,6 @@
 import {renderingImages} from './pictures-render.js';
 import {renderBigPicture} from './big-picture-render.js';
-import {closeUploadForm} from './upload-form.js';
+import {closeUploadForm, enableSubmitBtn} from './upload-form.js';
 import {showSuccess, showError} from './send-status.js';
 import {initFilters} from './filter.js';
 
@@ -17,7 +17,7 @@ const showSuccessMessage = () => {
 };
 
 const showErrorMessage = () => {
-  closeUploadForm();
+  enableSubmitBtn();
   showError();
 };
 
