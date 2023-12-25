@@ -9,7 +9,7 @@ const body = document.querySelector('body');
 const bigPicture = body.querySelector('.big-picture');
 const closeBtn = bigPicture.querySelector('.big-picture__cancel');
 const countComments = bigPicture.querySelector('.social__comment-count');
-const commentLoader = bigPicture.querySelector('.social__comments-loader');
+const commentLoadBtn = bigPicture.querySelector('.social__comments-loader');
 
 const bigPictureInfo = {
   img:  bigPicture.querySelector('.big-picture__img').querySelector('img'),
@@ -69,7 +69,7 @@ const loadNewComments = () => {
     currentCommentCount += COMMENT_STEP;
   } else {
     currentCommentCount += fullCommentArray.length - currentCommentCount;
-    commentLoader.classList.add('hidden');
+    commentLoadBtn.classList.add('hidden');
   }
 
   fillComments(currentCommentCount);
@@ -92,10 +92,10 @@ const openBigPicture = (picture) => {
 
     fillComments(COMMENT_STEP);
 
-    commentLoader.addEventListener('click', onCommentLoadBtnClick);
+    commentLoadBtn.addEventListener('click', onCommentLoadBtnClick);
   } else {
     countComments.classList.add('hidden');
-    commentLoader.classList.add('hidden');
+    commentLoadBtn.classList.add('hidden');
   }
 
   document.addEventListener('keydown', onDocumentKeydown);
@@ -111,11 +111,11 @@ const closeBigPicture = () => {
   fullCommentArray= 0;
 
   countComments.classList.remove('hidden');
-  commentLoader.classList.remove('hidden');
+  commentLoadBtn.classList.remove('hidden');
 
   document.removeEventListener('keydown', onDocumentKeydown);
   closeBtn.removeEventListener('click', onCloseBtnClick);
-  commentLoader.removeEventListener('click', onCommentLoadBtnClick);
+  commentLoadBtn.removeEventListener('click', onCommentLoadBtnClick);
 };
 
 function onCloseBtnClick() {

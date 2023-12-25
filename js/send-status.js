@@ -9,16 +9,20 @@ const errorBtn = errorTemplate.querySelector('.error__button');
 const closeMessage = (evt) => {
   if (isEscapeKey(evt) || evt.target === successBtn || evt.target === successTemplate){
     successTemplate.remove();
-    successBtn.removeEventListener('click', onCloseBtnClick);
+    successBtn.removeEventListener('click', onSuccessBtnClick);
     document.removeEventListener('keydown', onDocumentKeydown);
   } else if (isEscapeKey(evt) || evt.target === errorTemplate || evt.target === errorBtn) {
-    errorTemplate.removeChild();
-    errorBtn.removeEventListener('click', onCloseBtnClick);
+    errorTemplate.remove();
+    errorBtn.removeEventListener('click', onErrorBtnClick);
     document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
-function onCloseBtnClick(evt) {
+function onSuccessBtnClick(evt) {
+  closeMessage(evt);
+}
+
+function onErrorBtnClick(evt) {
   closeMessage(evt);
 }
 
@@ -35,14 +39,15 @@ function onDocumentKeydown(evt) {
 
 export const showSuccess = () => {
   body.append(successTemplate);
-  successBtn.addEventListener('click', onCloseBtnClick);
+  successBtn.addEventListener('click', onSuccessBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
 
 export const showError = () => {
+  errorTemplate.style.zIndex = 100;
   body.append(errorTemplate);
-  errorBtn.addEventListener('click', onCloseBtnClick);
+  errorBtn.addEventListener('click', onSuccessBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
