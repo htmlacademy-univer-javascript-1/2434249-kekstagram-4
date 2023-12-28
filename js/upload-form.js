@@ -57,25 +57,25 @@ const EffectSetting = {
 
 const body = document.querySelector('body');
 
-const uploadBtn = body.querySelector('.img-upload__input');
-const uploadOverlay = body.querySelector('.img-upload__overlay');
-const closeBtn = uploadOverlay.querySelector('.img-upload__cancel');
-const textHashtag = uploadOverlay.querySelector('.text__hashtags');
-const textDescrition = uploadOverlay.querySelector('.text__description');
-const uploadForm = document.getElementById('upload-select-image');
+const uploadBtnElement = body.querySelector('.img-upload__input');
+const uploadOverlayElement = body.querySelector('.img-upload__overlay');
+const closeBtnElement = uploadOverlayElement.querySelector('.img-upload__cancel');
+const textHashtagElement = uploadOverlayElement.querySelector('.text__hashtags');
+const textDescritionElement = uploadOverlayElement.querySelector('.text__description');
+const uploadFormElement = document.getElementById('upload-select-image');
 
-const scaleSmallerBtn = uploadOverlay.querySelector('.scale__control--smaller');
-const scaleBiggerBtn = uploadOverlay.querySelector('.scale__control--bigger');
-const scaleControlValue = uploadOverlay.querySelector('.scale__control--value');
-const picture = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
-const sliderForEffect = uploadOverlay.querySelector('.effect-level__slider');
-const effectContainer = uploadOverlay.querySelector('.effects__list');
-const effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
-const effectlevelValue =  effectLevel.querySelector('.effect-level__value');
-const submitBtn = uploadOverlay.querySelector('.img-upload__submit');
-const effectItems = uploadOverlay.querySelectorAll('.effects__preview');
+const scaleSmallerBtnElement = uploadOverlayElement.querySelector('.scale__control--smaller');
+const scaleBiggerBtnElement = uploadOverlayElement.querySelector('.scale__control--bigger');
+const scaleControlValueElment = uploadOverlayElement.querySelector('.scale__control--value');
+const pictureElement = uploadOverlayElement.querySelector('.img-upload__preview').querySelector('img');
+const sliderForEffect = uploadOverlayElement.querySelector('.effect-level__slider');
+const effectElement = uploadOverlayElement.querySelector('.effects__list');
+const effectLevelElement = uploadOverlayElement.querySelector('.img-upload__effect-level');
+const effectlevelValueElement =  effectLevelElement.querySelector('.effect-level__value');
+const submitBtnElement = uploadOverlayElement.querySelector('.img-upload__submit');
+const effectPreviewElements = uploadOverlayElement.querySelectorAll('.effects__preview');
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--invalid',
   errorTextParent: 'img-upload__field-wrapper',
@@ -84,14 +84,14 @@ const pristine = new Pristine(uploadForm, {
 });
 
 const isValidHashTagCount = () => {
-  const hashtags = textHashtag.value.trim().split(' ');
+  const hashtags = textHashtagElement.value.trim().split(' ');
   return hashtags.length <= 5;
 };
 
 const isValidHashTagType = () => {
-  const hashtags = textHashtag.value.trim().split(' ');
+  const hashtags = textHashtagElement.value.trim().split(' ');
   const validHashTag = /^#[a-zа-яё0-9]{1,19}$/;
-  if (textHashtag.value === '') {
+  if (textHashtagElement.value === '') {
     return true;
   } else {
     return hashtags.every((hashtag) => validHashTag.test(hashtag));
@@ -99,16 +99,16 @@ const isValidHashTagType = () => {
 };
 
 const isDuplicateHashTag = () => {
-  const hashtags = textHashtag.value.trim().split(' ');
+  const hashtags = textHashtagElement.value.trim().split(' ');
   return new Set(hashtags).size === hashtags.length;
 };
 
 const disableSubmitBtn = () => {
-  submitBtn.disabled = true;
+  submitBtnElement.disabled = true;
 };
 
 export const enableSubmitBtn = () => {
-  submitBtn.disabled = false;
+  submitBtnElement.disabled = false;
 };
 
 const sendingForm = (evt) => {
@@ -126,15 +126,15 @@ function onUploadFormSubmit(evt) {
 }
 
 const formValidation = () => {
-  pristine.addValidator(textHashtag, isValidHashTagCount, 'Превышено количество хэш-тегов');
-  pristine.addValidator(textHashtag, isValidHashTagType, 'Введён невалидный хэш-тег');
-  pristine.addValidator(textHashtag, isDuplicateHashTag, 'Хэш-теги повторяются');
+  pristine.addValidator(textHashtagElement, isValidHashTagCount, 'Превышено количество хэш-тегов');
+  pristine.addValidator(textHashtagElement, isValidHashTagType, 'Введён невалидный хэш-тег');
+  pristine.addValidator(textHashtagElement, isDuplicateHashTag, 'Хэш-теги повторяются');
 
-  uploadForm.addEventListener('submit', onUploadFormSubmit);
+  uploadFormElement.addEventListener('submit', onUploadFormSubmit);
 };
 
 const createEffectSlider = () => {
-  effectLevel.classList.add('hidden');
+  effectLevelElement.classList.add('hidden');
   noUiSlider.create(sliderForEffect, {
     range: {
       min: 0,
@@ -148,59 +148,59 @@ const createEffectSlider = () => {
 
 const openUploadForm = () => {
   body.classList.add('modal-open');
-  uploadOverlay.classList.remove('hidden');
-  closeBtn.addEventListener('click', onCloseBtnClick);
+  uploadOverlayElement.classList.remove('hidden');
+  closeBtnElement.addEventListener('click', oncloseBtnElementClick);
   document.addEventListener('keydown', onDocumentKeydown);
 
-  textDescrition.addEventListener('focus', onTextDescritionFocus);
-  textDescrition.addEventListener('blur', onTextDescritionBlur);
-  textHashtag.addEventListener('focus', onTextHashtagFocus);
-  textHashtag.addEventListener('blur', onTextHashtagBlur);
+  textDescritionElement.addEventListener('focus', ontextDescritionElementFocus);
+  textDescritionElement.addEventListener('blur', ontextDescritionElementBlur);
+  textHashtagElement.addEventListener('focus', ontextHashtagElementFocus);
+  textHashtagElement.addEventListener('blur', ontextHashtagElementBlur);
 
-  scaleBiggerBtn.addEventListener('click', onScaleBiggerBtnClick);
-  scaleSmallerBtn.addEventListener('click', onScaleSmallerBtnClick);
-  effectContainer.addEventListener('change', onEffectContainerChange);
+  scaleBiggerBtnElement.addEventListener('click', onscaleBiggerBtnElementClick);
+  scaleSmallerBtnElement.addEventListener('click', onscaleSmallerBtnElementClick);
+  effectElement.addEventListener('change', onEffectContainerChange);
 
-  picture.src = URL.createObjectURL(uploadBtn.files[0]);
-  effectItems.forEach((item) => {
-    item.style.backgroundImage = `url("${URL.createObjectURL(uploadBtn.files[0])}")`;
+  pictureElement.src = URL.createObjectURL(uploadBtnElement.files[0]);
+  effectPreviewElements.forEach((item) => {
+    item.style.backgroundImage = `url("${URL.createObjectURL(uploadBtnElement.files[0])}")`;
   });
 
-  picture.style.scale = 1;
-  scaleControlValue.value = '100%';
-  picture.style.filter = 'none';
-  submitBtn.disabled = false;
+  pictureElement.style.scale = 1;
+  scaleControlValueElment.value = '100%';
+  pictureElement.style.filter = 'none';
+  submitBtnElement.disabled = false;
   formValidation();
   createEffectSlider();
 };
 
 export const closeUploadForm = () => {
   body.classList.remove('modal-open');
-  uploadOverlay.classList.add('hidden');
-  closeBtn.removeEventListener('click', onCloseBtnClick);
+  uploadOverlayElement.classList.add('hidden');
+  closeBtnElement.removeEventListener('click', oncloseBtnElementClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 
-  textDescrition.removeEventListener('focus', onTextDescritionFocus);
-  textDescrition.removeEventListener('blur', onTextDescritionBlur);
-  textHashtag.removeEventListener('focus', onTextHashtagFocus);
-  textHashtag.removeEventListener('blur', onTextHashtagBlur);
+  textDescritionElement.removeEventListener('focus', ontextDescritionElementFocus);
+  textDescritionElement.removeEventListener('blur', ontextDescritionElementBlur);
+  textHashtagElement.removeEventListener('focus', ontextHashtagElementFocus);
+  textHashtagElement.removeEventListener('blur', ontextHashtagElementBlur);
 
-  scaleBiggerBtn.removeEventListener('click', onScaleBiggerBtnClick);
-  scaleSmallerBtn.removeEventListener('click', onScaleSmallerBtnClick);
-  uploadForm.removeEventListener('submit', onUploadFormSubmit);
+  scaleBiggerBtnElement.removeEventListener('click', onscaleBiggerBtnElementClick);
+  scaleSmallerBtnElement.removeEventListener('click', onscaleSmallerBtnElementClick);
+  uploadFormElement.removeEventListener('submit', onUploadFormSubmit);
 
-  picture.src = '';
-  effectItems.forEach((item) => {
+  pictureElement.src = '';
+  effectPreviewElements.forEach((item) => {
     item.style.backgroundImage = 'none';
   });
 
-  uploadBtn.value = '';
-  textHashtag.textContent = '';
-  textDescrition.textContent = '';
+  uploadBtnElement.value = '';
+  textHashtagElement.textContent = '';
+  textDescritionElement.textContent = '';
   sliderForEffect.noUiSlider.destroy();
-  picture.style.scale = 1;
-  scaleControlValue.value = '';
-  picture.style.filter = 'none';
+  pictureElement.style.scale = 1;
+  scaleControlValueElment.value = '';
+  pictureElement.style.filter = 'none';
 };
 
 const isPicture = () => {
@@ -211,27 +211,27 @@ const isPicture = () => {
   }
 };
 
-function onTextDescritionFocus() {
+function ontextDescritionElementFocus() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function onTextDescritionBlur() {
+function ontextDescritionElementBlur() {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-function onTextHashtagFocus() {
+function ontextHashtagElementFocus() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function onTextHashtagBlur() {
+function ontextHashtagElementBlur() {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-function onUploadBtnClick() {
+function onuploadBtnElementClick() {
   isPicture();
 }
 
-function onCloseBtnClick() {
+function oncloseBtnElementClick() {
   closeUploadForm();
 }
 
@@ -243,33 +243,33 @@ function onDocumentKeydown(evt) {
 }
 
 const updateScaleValueBig = () => {
-  scaleControlValue.value = scaleControlValue.value.slice(0, -1) < PictureScaleValue.MAX
-    ? `${+scaleControlValue.value.slice(0, -1) + PICTURE_SCALE_STEP}%`
+  scaleControlValueElment.value = scaleControlValueElment.value.slice(0, -1) < PictureScaleValue.MAX
+    ? `${+scaleControlValueElment.value.slice(0, -1) + PICTURE_SCALE_STEP}%`
     : `${PictureScaleValue.MAX}%`;
 
-  picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
+  pictureElement.style.scale = +scaleControlValueElment.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
 const updateScaleValueSmall = () => {
-  scaleControlValue.value = scaleControlValue.value.slice(0, -1) > PictureScaleValue.MIN
-    ? `${+scaleControlValue.value.slice(0, -1) - PICTURE_SCALE_STEP}%`
+  scaleControlValueElment.value = scaleControlValueElment.value.slice(0, -1) > PictureScaleValue.MIN
+    ? `${+scaleControlValueElment.value.slice(0, -1) - PICTURE_SCALE_STEP}%`
     : `${PictureScaleValue.MIN}%`;
 
-  picture.style.scale = +scaleControlValue.value.slice(0, -1) * PICTURE_SCALE_RATIO;
+  pictureElement.style.scale = +scaleControlValueElment.value.slice(0, -1) * PICTURE_SCALE_RATIO;
 };
 
-function onScaleSmallerBtnClick() {
+function onscaleSmallerBtnElementClick() {
   updateScaleValueSmall();
 }
 
-function onScaleBiggerBtnClick() {
+function onscaleBiggerBtnElementClick() {
   updateScaleValueBig();
 }
 
 const updateSlider = (effect) => {
   sliderForEffect.noUiSlider.on('update', () => {
-    picture.style.filter = `${effect.style}(${sliderForEffect.noUiSlider.get()}${effect.unit})`;
-    effectlevelValue.value = sliderForEffect.noUiSlider.get();
+    pictureElement.style.filter = `${effect.style}(${sliderForEffect.noUiSlider.get()}${effect.unit})`;
+    effectlevelValueElement.value = sliderForEffect.noUiSlider.get();
   });
   sliderForEffect.noUiSlider.updateOptions({
     range: {
@@ -283,11 +283,11 @@ const updateSlider = (effect) => {
 
 const effectApplication = (evt) => {
   if (evt.target.id === EffectSetting.NONE) {
-    picture.style.filter = 'none';
-    effectLevel.classList.add('hidden');
+    pictureElement.style.filter = 'none';
+    effectLevelElement.classList.add('hidden');
   }
   else {
-    effectLevel.classList.remove('hidden');
+    effectLevelElement.classList.remove('hidden');
     if (evt.target.id === EffectSetting.CHROME.name) {
       updateSlider(EffectSetting.CHROME);
     }
@@ -311,5 +311,5 @@ function onEffectContainerChange(evt) {
 }
 
 export const uploadNewImg = () => {
-  uploadBtn.addEventListener('input', onUploadBtnClick);
+  uploadBtnElement.addEventListener('input', onuploadBtnElementClick);
 };

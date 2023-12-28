@@ -47,7 +47,7 @@ export const showSuccess = () => {
 export const showError = () => {
   errorTemplate.style.zIndex = 100;
   body.append(errorTemplate);
-  errorBtn.addEventListener('click', onSuccessBtnClick);
+  errorBtn.addEventListener('click', onErrorBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
