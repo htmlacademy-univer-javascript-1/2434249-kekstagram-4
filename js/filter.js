@@ -1,4 +1,4 @@
-import { sortByComments, sortRandom} from './util.js';
+import {sortByComments, sortRandom} from './util.js';
 import {debounce} from './util.js';
 
 const MAX_COUNT_RANDOM_CARD = 10;
@@ -10,7 +10,7 @@ const Filter = {
 };
 
 const filtersContainer = document.querySelector('.img-filters');
-const filtersForm = filtersContainer.querySelector('.img-filters__form');
+const filtersFormContainer = filtersContainer.querySelector('.img-filters__form');
 
 let pictures = null;
 let activeFilter = Filter.DEFAULT;
@@ -25,7 +25,7 @@ const filterFunction = {
 const onFiltersContainerClick = (evt) => {
   const id = evt.target.id;
   if (id && id !== activeFilter) {
-    filtersForm.querySelector(`#${activeFilter}`).classList.remove('img-filters__button--active');
+    filtersFormContainer.querySelector(`#${activeFilter}`).classList.remove('img-filters__button--active');
     evt.target.classList.add('img-filters__button--active');
     activeFilter = id;
     if (callback) {

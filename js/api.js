@@ -1,4 +1,4 @@
-import {renderingImages} from './pictures-render.js';
+import {renderImages} from './pictures-render.js';
 import {renderBigPicture} from './big-picture-render.js';
 import {closeUploadForm, enableSubmitBtn} from './upload-form.js';
 import {showSuccess, showError} from './send-status.js';
@@ -35,7 +35,7 @@ const createLoader = (errorText) => fetch(
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .then((pictures) => {
-    initFilters(pictures, renderingImages);
+    initFilters(pictures, renderImages);
     renderBigPicture(pictures);
   })
   .catch(() => {

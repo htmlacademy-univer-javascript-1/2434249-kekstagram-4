@@ -1,20 +1,20 @@
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const pictureList = document.querySelector('.pictures');
+const pictureTemplateNode = document.querySelector('#picture').content.querySelector('.picture');
+const pictureListNode = document.querySelector('.pictures');
 
-const similarListFragment = document.createDocumentFragment();
+const similarListNode = document.createDocumentFragment();
 
-const destroyPictures = () => document.querySelectorAll('.picture').forEach((picture) => pictureList.removeChild(picture));
+const destroyPictures = () => document.querySelectorAll('.picture').forEach((picture) => pictureListNode.removeChild(picture));
 
-export const renderingImages = (generatePictures) => {
+export const renderImages = (generatePictures) => {
   generatePictures.forEach(({url, description, likes, comments}) => {
-    const pictureElement = pictureTemplate.cloneNode(true);
+    const pictureElement = pictureTemplateNode.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    similarListFragment.appendChild(pictureElement);
+    similarListNode.appendChild(pictureElement);
   });
 
   destroyPictures();
-  pictureList.appendChild(similarListFragment);
+  pictureListNode.appendChild(similarListNode);
 };
